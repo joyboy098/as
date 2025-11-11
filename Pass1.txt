@@ -1,0 +1,65 @@
+import java.util.*;
+
+public class Pass1 {
+    public static void main(String[] args) {
+        // Sample Assembly Code
+        String[][] code = {
+            {"", "START", "100"},
+            {"", "MOVER", "AREG, A"},
+            {"", "ADD", "BREG, B"},
+            {"AGAIN", "MULT", "CREG, A"},
+            {"", "MOVEM", "AREG, RESULT"},
+            {"A", "DC", "5"},
+            {"B", "DC", "10"},
+            {"RESULT", "DS", "1"},
+            {"", "END", ""}
+        };
+
+        Map<String, Integer> symbolTable = new LinkedHashMap<>();
+        int LC = 0, startAddress = 0;
+
+        System.out.println("\n=== PASS 1 ASSEMBLER SIMULATION ===");
+
+        for (int i = 0; i < code.length; i++) {
+            String label = code[i][0];
+            String opcode = code[i][1];
+            String operand = code[i][2];
+
+            switch (opcode) {
+                case "START":
+                    startAddress = Integer.parseInt(operand);
+                    LC = startAddress;
+                    System.out.println("Program starts at address: " + LC);
+                    break;
+
+                case "END":
+                    System.out.println("End of program.");
+                    break;
+
+                case "DS": // Define storage
+                    symbolTable.put(label, LC);
+                    LC += Integer.parseInt(operand); 
+                    break;
+
+                case "DC": // Define constant
+                    symbolTable.put(label, LC);
+                    LC++;
+                    break;
+
+                default: // Instructions (imperative)
+                    if (!label.isBlank()) {
+                        symbolTable.put(label, LC);
+                    }
+                    LC++;
+                    break;
+            }
+        }
+        System.out.println("\n--- SYMBOL TABLE ---");
+        System.out.println("Symbol\tAddress");
+        for (String key : symbolTable.keySet()) {
+            System.out.println(key+ "\t" + symbolTable.get(key));
+        }
+
+        System.out.println("\nProgram length: " + (LC - startAddress) + " bytes");
+    }
+}

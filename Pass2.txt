@@ -1,0 +1,56 @@
+import java.util.*;
+
+public class Pass2 {
+    public static void main(String[] args) {
+        System.out.println("=== PASS 2 ASSEMBLER SIMULATION ===");
+        int startAddress = 100;
+
+        Map<String, Integer> symbolTable = new HashMap<>();
+        symbolTable.put("AGAIN", 102);
+        symbolTable.put("A", 104);
+        symbolTable.put("B", 105);
+        symbolTable.put("RESULT", 106);
+
+        String[][] intermediateCode = {
+            {"IS", "04", "1", "A"},      // MOVER BREG, A
+            {"IS", "05", "1", "B"},      // MOVEM BREG, B
+            {"IS", "01", "2", "A"},      // ADD CREG, A
+            {"IS", "05", "2", "RESULT"}, // MOVEM CREG, RESULT
+            {"DL", "01", "1", " "},      // DC 1
+            {"DL", "02", "2", " "}       // DS 2
+        };
+        System.out.println("\nLC\tOPCODE\tREG\tOPERAND");
+        System.out.println("--------------------------------");
+
+        int LC = startAddress;
+        for (String[] line : intermediateCode) {
+            String type = line[0];
+            String opcode = line[1];
+            String reg = line[2];
+            String operand = line[3];
+
+            System.out.print(LC + "\t");
+
+            if (type.equals("IS")) {  
+                System.out.print(opcode + "\t" + reg + "\t");
+                if (symbolTable.containsKey(operand)) {
+                    System.out.println(symbolTable.get(operand));
+                } else {
+                    System.out.println(operand);
+                }
+                LC++;
+            } 
+            else if (type.equals("DL")) { 
+                if (opcode.equals("01")) { 
+                    System.out.println("-\t-\t" + reg);
+                    LC++;
+                } else if (opcode.equals("02")) { 
+                    System.out.println("-\t-\t" + reg);
+                    LC += Integer.parseInt(reg);
+                }
+            }
+        }
+
+        System.out.println("\nProgram length: 7 bytes");
+    }
+}

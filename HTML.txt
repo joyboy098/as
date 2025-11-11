@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Responsive Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #333;
+      color: white;
+      padding: 15px 0;
+      text-align: center;
+    }
+
+    nav {
+      background: #444;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      background: #555;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+
+    .box {
+      background: #f4f4f4;
+      flex: 1 1 300px;
+      margin: 10px;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 600px) {
+      header, footer {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Responsive Web Page</h1>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <div class="container">
+    <div class="box">
+      <h2>Section 1</h2>
+      <p>This is a responsive section. It resizes automatically on any device.</p>
+    </div>
+    <div class="box">
+      <h2>Section 2</h2>
+      <p>Try resizing the browser window to see the layout adjust.</p>
+    </div>
+    <div class="box">
+      <h2>Section 3</h2>
+      <p>Clean, simple, and mobile-friendly design!</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 My Website | All rights reserved.</p>
+  </footer>
+</body>
+</html>

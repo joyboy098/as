@@ -1,0 +1,58 @@
+#include <iostream>
+#include<queue>
+using namespace std;
+const int N = 100005;  
+
+int n, frame_size;
+int pages[N];
+bool mark[N]; 
+
+void fifo_page_replacement() {
+    queue<int> Q;
+    int page_faults = 0, hits = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (mark[pages[i]]) {
+            hits++;
+        } else {
+            Q.push(pages[i]);
+            mark[pages[i]] = true;
+            if (Q.size() > frame_size) {
+                int p = Q.front();
+                mark[p] = false; 
+                Q.pop();
+            }
+
+            page_faults++;
+        }
+    }
+
+    cout << "\n=== FIFO Page Replacement Results ===\n";
+    
+    cout << "Total Page Hits   : " << hits << "\n";
+    cout << "Total Page Faults : " << page_faults << "\n";
+
+    float hit_ratio = (float)hits / n * 100;
+    float fault_ratio = (float)page_faults / n * 100;
+
+    cout << "Page Fault Ratio : " << fault_ratio << "%\n";
+    cout << "Page Hit Ratio   : " << hit_ratio << "%\n";
+}
+
+int main() {
+    cout << "Enter Number of Frames : ";
+    cin >> frame_size;
+
+    cout << "Enter Page String Length : ";
+    cin >> n;
+
+    cout << "Enter Page Numbers :\n";
+    for (int i = 0; i < n; i++) cin >> pages[i];
+    for (int i = 0; i < n; i++) {
+        mark[i] = false;
+    }
+
+    fifo_page_replacement();
+
+    return 0;
+}
